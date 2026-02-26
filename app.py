@@ -412,13 +412,11 @@ def init_session():
 
 # ── 헤더 + 스텝바 ─────────────────────────────────────────────────────────────
 def render_header():
-    st.markdown(f"""
-    <div class="phodong-header">
-        {BEAR_SVG}
-        <h1>포동 PHODONG</h1>
-        <p>사물이 살아있는 나만의 동화</p>
-    </div>
-    """, unsafe_allow_html=True)
+    bear = BEAR_SVG
+    st.markdown(
+        f'<div class="phodong-header">{bear}<h1>포동 PHODONG</h1><p>사물이 살아있는 나만의 동화</p></div>',
+        unsafe_allow_html=True
+    )
 
 def render_stepbar(current: str):
     steps = [("config", "설정"), ("camera", "촬영"), ("story", "동화")]
@@ -446,9 +444,9 @@ def render_config():
 
     col1, col2, col3 = st.columns([2, 2, 1])
     with col1:
-        child_name = st.text_input("주인공 이름", value="민준", placeholder="예: 민준이")
+        child_name = st.text_input("주인공 이름", value="", placeholder="예: 민준")
     with col2:
-        partner_name = st.text_input("짝꿍 이름", value="친구", placeholder="예: 뽀로로")
+        partner_name = st.text_input("짝꿍 이름", value="", placeholder="예: 뽀로로")
     with col3:
         age = st.selectbox("나이", options=[5, 6, 7, 8], index=2)
 
