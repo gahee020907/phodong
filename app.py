@@ -422,21 +422,21 @@ def render_header():
 
 def render_stepbar(current: str):
     steps = [("config", "설정"), ("camera", "촬영"), ("story", "동화")]
+    keys = [s[0] for s in steps]
+    current_idx = keys.index(current) if current in keys else 0
     items = []
     for i, (key, label) in enumerate(steps):
         if key == current:
             cls = "active"
-        elif steps.index((key, label)) < [s[0] for s in steps].index(current):
+        elif i < current_idx:
             cls = "done"
         else:
             cls = ""
-        items.append(f"""
-        <div class="step-item {cls}">
-            <div class="step-dot">{i+1}</div> {label}
-        </div>
-        {"<div class='step-line'></div>" if i < len(steps)-1 else ""}
-        """)
-    st.markdown(f'<div class="step-bar">{"".join(items)}</div>', unsafe_allow_html=True)
+        line = "<div class='step-line'></div>" if i < len(steps)-1 else ""
+        items.append(
+            f"<div class='step-item {cls}'><div class='step-dot'>{i+1}</div> {label}</div>{line}"
+        )
+    st.markdown("<div class='step-bar'>" + "".join(items) + "</div>", unsafe_allow_html=True)
 
 
 # ── STEP 1: 설정 화면 ─────────────────────────────────────────────────────────
